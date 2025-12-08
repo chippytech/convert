@@ -79,6 +79,19 @@ fileInput.addEventListener("change", fileSelectHandler);
 window.addEventListener("drop", fileSelectHandler);
 window.addEventListener("dragover", (e) => e.preventDefault());
 
+const popupBox = document.querySelector("#popup");
+const popupBackground = document.querySelector("#popup-bg");
+
+function showPopup (html) {
+  popupBox.innerHTML = html;
+  popupBox.style.display = "block";
+  popupBackground.style.display = "block";
+}
+function hidePopup () {
+  popupBox.style.display = "none";
+  popupBackground.style.display = "none";
+}
+
 const initPromises = [];
 for (const handler of handlers) {
   initPromises.push(handler.init());
@@ -131,8 +144,7 @@ Promise.all(initPromises).then(() => {
   searchHandler({ target: inputSearch });
   searchHandler({ target: outputSearch });
 
-  document.querySelector("#popup-bg").style.display = "none";
-  document.querySelector("#popup").style.display = "none";
+  hidePopup();
 
 });
 
@@ -149,7 +161,8 @@ async function attemptConvertPath (inputFile, path) {
       if (!file.bytes.length) throw "Output is empty.";
       file.name = file.name.split(".")[0] + "." + path[i + 1].format.extension;
     } catch (e) {
-      // console.error(e);
+      // console.log(path.map(c => c.format.format));
+      // console.error(path[i + 1].handler.name, `${path[i].format.format} -> ${path[i + 1].format.format}`, e);
       return null;
     }
   }
@@ -216,25 +229,37 @@ window.convertSelection = async function () {
   const inputOption = allOptions[Number(inputButton.getAttribute("format-index"))];
   const outputOption = allOptions[Number(outputButton.getAttribute("format-index"))];
 
-  const inputBuffer = await inputFile.arrayBuffer();
-  const inputBytes = new Uint8Array(inputBuffer);
+  try {
 
-  const inputFileData = { name: inputFile.name, bytes: inputBytes };
+    const inputBuffer = await inputFile.arrayBuffer();
+    const inputBytes = new Uint8Array(inputBuffer);
 
-  const output = await buildConvertPath(inputFileData, outputOption, [[inputOption]]);
-  if (!output) return alert("Failed to find conversion route.");
+    const inputFileData = { name: inputFile.name, bytes: inputBytes };
 
-  const outputFormat = outputOption.format;
+    showPopup("<h2>Finding conversion route...</h2>");
 
-  const blob = new Blob([output.file.bytes], { type: outputFormat.mime });
-  const link = document.createElement("a");
-  link.href = URL.createObjectURL(blob);
-  link.download = output.file.name;
-  link.click();
+    const output = await buildConvertPath(inputFileData, outputOption, [[inputOption]]);
+    if (!output) return alert("Failed to find conversion route.");
 
-  alert(
-    `Converted ${inputOption.format.format} to ${outputOption.format.format}!\n` +
-    `Path used: ${output.path.map(c => c.format.format).join(" -> ")}`
-  );
+    const outputFormat = outputOption.format;
+
+    const blob = new Blob([output.file.bytes], { type: outputFormat.mime });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = output.file.name;
+    link.click();
+
+    alert(
+      `Converted ${inputOption.format.format} to ${outputOption.format.format}!\n` +
+      `Path used: ${output.path.map(c => c.format.format).join(" -> ")}`
+    );
+
+  } catch (e) {
+
+    alert("Unexpected error while routing:\n" + e);
+
+  }
+
+  hidePopup();
 
 }
