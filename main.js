@@ -174,12 +174,6 @@ async function attemptConvertPath (inputFile, path) {
 
 }
 
-// Blacklist for problematic intermediary formats
-// This does *not* proibit generating from/to these
-const blacklist = [
-  "image/fits"
-];
-
 async function buildConvertPath (file, target, queue) {
 
   while (queue.length > 0) {
@@ -209,7 +203,6 @@ async function buildConvertPath (file, target, queue) {
         if (!format.to) continue;
         if (!format.mime) continue;
         if (path.some(c => c.format === format)) continue;
-        if (blacklist.includes(format.mime)) continue;
         queue.push(path.concat({ format, handler }));
       }
     }
