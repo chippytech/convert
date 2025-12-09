@@ -28,8 +28,6 @@ async function init () {
     }
   }
 
-  console.log(delegates);
-
   const lines = listFormats.stdout.slice(2).map(c => c.trim());
   for (let line of lines) {
 
