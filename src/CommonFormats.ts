@@ -4,6 +4,7 @@ import { FormatDefinition } from "src/FormatHandler"
  * Common format definitions which can be used to reduce boilerplate definitions
  */
 const CommonFormats = {
+    // images
     PNG: new FormatDefinition(
         "Portable Network Graphics",
         "png",
@@ -15,12 +16,6 @@ const CommonFormats = {
         "jpeg",
         "jpg",
         "image/jpeg"
-    ),
-    JSON: new FormatDefinition(
-        "JavaScript Object Notation",
-        "json",
-        "json",
-        "application/json"
     ),
     WEBP: new FormatDefinition(
         "WebP",
@@ -39,6 +34,13 @@ const CommonFormats = {
         "svg",
         "svg",
         "image/svg+xml"
+    ),
+    // texts
+    JSON: new FormatDefinition(
+        "JavaScript Object Notation",
+        "json",
+        "json",
+        "application/json"
     ),
     TEXT: new FormatDefinition(
         "Plain Text",
