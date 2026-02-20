@@ -304,7 +304,11 @@ export class TraversionGraph {
             if (current.index === toIndex) {
                 // Return the path of handlers and formats to get from the input format to the output format
                 const logString = `${iterations} with cost ${current.cost.toFixed(3)}: ${current.path.map(p => p.handler.name + "(" + p.format.mime + ")").join(" → ")}`;
-                if (simpleMode || !to.handler || to.handler.name === current.path.at(-1)?.handler.name) {
+                const foundPathLast = current.path.at(-1);
+                if (
+                    to.format.format === foundPathLast?.format.format &&
+                    (simpleMode || !to.handler || to.handler.name === foundPathLast?.handler.name)
+                ) {
                     console.log(`Found path at iteration ${logString}`);
                     this.dispatchEvent("found", current.path);
                     yield current.path;
