@@ -5,9 +5,9 @@ import CommonFormats from "src/CommonFormats.ts";
 import { Packager, largeAssets, downloadProject } from "turbowarp-packager-browser";
 
 // patching some assets
-largeAssets.scaffolding.src = "/convert/js/turbowarp-scaffolding/scaffolding-full.js";
-largeAssets["scaffolding-min"].src = "/convert/js/turbowarp-scaffolding/scaffolding-min.js";
-largeAssets.addons.src = "/convert/js/turbowarp-scaffolding/addons.js";
+largeAssets.scaffolding.src = "/js/turbowarp-scaffolding/scaffolding-full.js";
+largeAssets["scaffolding-min"].src = "/js/turbowarp-scaffolding/scaffolding-min.js";
+largeAssets.addons.src = "/js/turbowarp-scaffolding/addons.js";
 
 class turbowarpHandler implements FormatHandler {
 

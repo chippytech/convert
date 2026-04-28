@@ -16,9 +16,9 @@ declare global {
 // Set up a basic webserver to host the distribution build
 const server = Bun.serve({
   async fetch (req) {
-    let path = new URL(req.url).pathname.replace("/convert/", "") || "index.html";
+    let path = new URL(req.url).pathname.replace(/^\/+/, "") || "index.html";
     path = path.replaceAll("..", "");
-    if (path.startsWith("/test/")) path = "../test/resources/" + path.slice(6);
+    if (path.startsWith("test/")) path = "../test/resources/" + path.slice(5);
     const file = Bun.file(`${__dirname}/../dist/${path}`);
     if (!(await file.exists())) return new Response("Not Found", { status: 404 });
     return new Response(file);
@@ -40,7 +40,7 @@ await Promise.all([
       if (text === "Built initial format list.") resolve(null);
     });
   }),
-  page.goto("http://localhost:8080/convert/index.html")
+  page.goto("http://localhost:8080/index.html")
 ]);
 
 console.log("Setup finished.");
@@ -67,7 +67,18 @@ function attemptConversion (
         name: fileName
       });
     }
-    return await window.tryConvertByTraversing(files, from, to);
+    const conversion = await window.tryConvertByTraversing(files, from, to);
+    if (!conversion) return null;
+    return {
+      path: conversion.path.map(c => ({
+        format: c.format,
+        handlerName: c.handler.name
+      })),
+      files: conversion.files.map(file => ({
+        name: file.name,
+        byteLength: file.bytes.length
+      }))
+    };
   },
     files,
     { format: from, handler: dummyHandler },
@@ -171,7 +182,7 @@ test("docx → html → svg → png → pdf", async () => {
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
     "text/html", "image/svg+xml", "image/png", "application/pdf"
   ]);
-  const fileSize = Object.values(conversion!.files[0].bytes).length;
+  const fileSize = conversion!.files[0].byteLength;
   expect(fileSize).toBeWithin(55000, 65000);
 
 }, { timeout: 60000 });
@@ -203,7 +214,7 @@ test("txt → wav → flac", async () => {
   expect(conversion!.path.map(c => c.format.mime)).toEqual([
     "text/plain", "audio/wav", "audio/flac"
   ]);
-  expect(conversion!.path[1].handler.name).toBe("espeakng");
+  expect(conversion!.path[1].handlerName).toBe("espeakng");
 
 }, { timeout: 60000 });
 

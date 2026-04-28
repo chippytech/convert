@@ -15,7 +15,7 @@ class pdfparseHandler implements FormatHandler {
   public ready: boolean = false;
 
   async init () {
-    PDFParse.setWorker('/convert/js/pdf.worker.mjs');
+    PDFParse.setWorker('/js/pdf.worker.mjs');
     this.ready = true;
   }
 

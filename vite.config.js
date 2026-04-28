@@ -10,7 +10,7 @@ export default defineConfig({
       "@bokuweb/zstd-wasm"
     ]
   },
-  base: "/convert/",
+  base: "/",
   plugins: [
     viteStaticCopy({
       targets: [
