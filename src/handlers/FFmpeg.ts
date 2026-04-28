@@ -17,6 +17,7 @@ class FFmpegHandler implements FormatHandler {
     ["wav", CommonFormats.WAV.name],
     ["mp3", CommonFormats.MP3.name],
     ["ogg", CommonFormats.OGG.name],
+    ["wma", CommonFormats.WMA.name],
     ["matroska", "Matroska / WebM"],
     ["mov", "QuickTime / MOV"],
     ["3gp", "3GPP Multimedia Container"],
@@ -235,6 +236,18 @@ class FFmpegHandler implements FormatHandler {
       to: true,
       internal: "asf",
       category: "video"
+    });
+
+    // Add .wma (Windows Media Audio) support - uses ASF container
+    this.supportedFormats.push({
+      name: "Windows Media Audio",
+      format: "wma",
+      extension: "wma",
+      mime: "audio/x-ms-wma",
+      from: true,
+      to: true,
+      internal: "asf",
+      category: "audio"
     });
 
     // Add .mkv (Matroska Video) support - uses Matroska demuxer/muxer
