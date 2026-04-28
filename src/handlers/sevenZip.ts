@@ -7,7 +7,7 @@ import mime from "mime";
 import normalizeMimeType from "src/normalizeMimeType.ts";
 
 const defaultSevenZipOptions = {
-  locateFile: () => "/convert/wasm/7zz.wasm"
+  locateFile: () => "/wasm/7zz.wasm"
 }
 
 class sevenZipHandler implements FormatHandler {

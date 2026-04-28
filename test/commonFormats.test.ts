@@ -16,7 +16,7 @@ declare global {
 // Set up a basic webserver to host the distribution build
 const server = Bun.serve({
   async fetch (req) {
-    let path = new URL(req.url).pathname.replace("/convert/", "") || "index.html";
+    let path = new URL(req.url).pathname.replace("/", "") || "index.html";
     path = path.replaceAll("..", "");
     if (path.startsWith("/test/")) path = "../test/resources/" + path.slice(6);
     const file = Bun.file(`${__dirname}/../dist/${path}`);
@@ -40,7 +40,7 @@ await Promise.all([
       if (text === "Built initial format list.") resolve(null);
     });
   }),
-  page.goto("http://localhost:8080/convert/index.html")
+  page.goto("http://localhost:8080/index.html")
 ]);
 
 console.log("Setup finished.");
