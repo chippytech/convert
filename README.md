@@ -1,5 +1,5 @@
 # [Convert to it!](https://convert.to.it/)
-**Truly universal online file converter.**
+**Truly universal online file converter, But improved**
 
 Many online file conversion tools are **boring** and **insecure**. They only allow conversion between two formats in the same medium (images to images, videos to videos, etc.), and they require that you _upload your files to some server_.
 
@@ -12,7 +12,7 @@ For a semi-technical overview of this tool, check out the video: https://youtu.b
 ## Usage
 
 1. Go to [convert.to.it](https://convert.to.it/)
-2. Click the big blue box to add your file (or just drag it on to the window).
+2. Click the big blue box to add your file (or just drag it onto the window).
 3. An input format should have been automatically selected. If it wasn't, yikes! Try searching for it, or if it's really not there, see the "Issues" section below.
 4. Select an output format from the second list. If you're on desktop, that's the one on the right side. If you're on mobile, it'll be somewhere lower down.
 5. Click **Convert**!
@@ -20,7 +20,7 @@ For a semi-technical overview of this tool, check out the video: https://youtu.b
 
 ## Issues
 
-Ever since the YouTube video released, we've been getting spammed with issues suggesting the addition of all kinds of niche file formats. To keep things organized, I've decided to specify what counts as a valid issue and what doesn't.
+Since the YouTube video was released, we've been receiving many requests to add niche file formats. To keep things organized, I've decided to specify what counts as a valid issue and what doesn't.
 
 > [!IMPORTANT]
 > **SIMPLY ASKING FOR A FILE FORMAT TO BE ADDED IS NOT A MEANINGFUL ISSUE!**
@@ -34,7 +34,7 @@ When suggesting a file format, you must _at minimum_:
 
 If this seems like a lot, please remember - a developer will have to do 100x more work to actually implement the format. Doing a bit of research not only saves them precious time, it also weeds out "unserious" proposals that would only bloat our to-do list.
 
-**If you're submitting a bug report,** you only need to do step 1 - check if the problem isn't already reported by someone else. Bug reports are generally quite important otherwise.
+**If you're submitting a bug report,** you only need to do step 1 - check if the problem hasn't already been reported by someone else. Bug reports are generally quite important otherwise.
 
 Though please note, "converting X to Y doesn't work" is **not** a bug report.  However, "converting X to Y works but not how I expected" likely **is** a bug report.
 
@@ -53,7 +53,7 @@ When you first open the page, it'll take a while to generate the list of support
 
 After this is done (indicated by a `Built initial format list` message in the console), use `printSupportedFormatCache()` to get a JSON string with the cache data. You can then save this string to `cache.json` to skip that loading screen on startup.
 
-If you run into issues where your changes seem to not be applying, try disabling this cache.
+If you run into issues where your changes seem not to be applying, try disabling this cache.
 
 ### Docker (prebuilt image)
 
@@ -63,7 +63,7 @@ Docker compose files live in the `docker/` directory, so run compose with `-f` f
 docker compose -f docker/docker-compose.yml up -d
 ```
 
-Alternatively download the `docker-compose.yml` separately and start it by executing `docker compose up -d` in the same directory.
+Alternatively, download the `docker-compose.yml` separately and start it by executing `docker compose up -d` in the same directory.
 
 This runs the container on `http://localhost:8080/convert/`.
 
