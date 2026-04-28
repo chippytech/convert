@@ -176,6 +176,13 @@ const CommonFormats = {
         "audio/flac",
         Category.AUDIO
     ),
+    WMA: new FormatDefinition(
+        "Windows Media Audio",
+        "wma",
+        "wma",
+        "audio/x-ms-wma",
+        Category.AUDIO
+    ),
     // video
     MP4: new FormatDefinition(
         "MPEG-4 Part 14",
